@@ -51,7 +51,7 @@ def do_command(plugin_display_name: str, command_name: str) -> Response:
 
     params = typing.cast(dict, request.json or {})
     task_data = params.pop('spiff__task_data', '{}')
-    params = {key: value for key, value in params.items() if not key.startswith("spiff__")}
+    params = {key: value for key, value in params.items() if not key.startswith("spiff__") or key == "spiff__callback_url"}
 
     try:
         result = command(**params).execute(current_app.config, task_data)
