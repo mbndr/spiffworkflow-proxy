@@ -55,7 +55,6 @@ def do_command(plugin_display_name: str, command_name: str) -> Response:
 
     try:
         result = command(**params).execute(current_app.config, task_data)
-        print(json.dumps(params), flush=True)
     except Exception as e:
         return json_error_response(
             message=str(e),
