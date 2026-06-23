@@ -64,7 +64,8 @@ def do_command(plugin_display_name: str, command_name: str) -> Response:
 
     if "command_response_version" in result and result["command_response_version"] > 1:  # type: ignore
         response = json.dumps(result)
-        return Response(response, mimetype='application/json', status=200)
+        status_code = result.get("command_response", {}).get("http_status", 200) if isinstance(result, dict) else 200
+        return Response(response, mimetype='application/json', status=status_code)
     else:
         status_code = 200
         if 'status' in result:
